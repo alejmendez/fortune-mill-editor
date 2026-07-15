@@ -184,6 +184,16 @@ body {
   font-size: 11px;
   color: var(--accent);
 }
+.sidebar-credits {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-top: 1px dashed var(--line);
+  color: var(--fg-2);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.sidebar-credits a { color: var(--accent); }
+.sidebar-credits a:hover { color: var(--accent-2); }
 
 /* ----------------------------- Content ----------------------------- */
 
@@ -654,6 +664,15 @@ body {
 }
 .callout strong { color: var(--accent); }
 .callout .btn { flex-shrink: 0; }
+
+.modal-credits {
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  text-align: center;
+}
+.modal-credits a { color: var(--accent); }
+.modal-credits a:hover { color: var(--accent-2); }
 
 .modal-footer {
   display: flex;

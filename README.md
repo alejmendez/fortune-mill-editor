@@ -158,6 +158,19 @@ PRs welcome.
 
 ---
 
+## 🙏 Credits
+
+This project wouldn't exist without **[HolzMichel](https://steamcommunity.com/profiles/76561198218419217)**,
+who reverse-engineered the Fortune Mill save format and shared the findings in
+their [Steam guide](https://steamcommunity.com/sharedfiles/filedetails/?id=3749442368).
+The Python CLI dumper/writer in `tools/` is a direct port of the field layout
+documented in that guide.
+
+If you use this editor, please go give them a thumbs-up on the original Steam
+post — that's where the real work happened.
+
+---
+
 ## ⚖️ License
 
 This is a fan-made save editor. Fortune Mill belongs to its respective
