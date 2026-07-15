@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fortune Mill — Save Editor</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◉</span>
+      <h1>Fortune Mill <span class="brand-sub">save editor</span></h1>
+    </div>
+    <div class="toolbar">
+      <button id="btn-open-sav" class="btn">Open .sav</button>
+      <input type="file" id="file-sav" accept=".sav,application/octet-stream" hidden />
+      <button id="btn-open-txt" class="btn">Open .txt dump</button>
+      <input type="file" id="file-txt" accept=".txt,.dump,text/plain" hidden />
+      <button id="btn-save-sav" class="btn primary" title="Ctrl+S">Save .sav</button>
+      <button id="btn-save-txt" class="btn">Save .txt dump</button>
+      <button id="btn-roundtrip" class="btn ghost" title="Verify that the parser and writer agree on the loaded bytes">Round-trip check</button>
+      <button id="btn-reset" class="btn ghost danger">Reset</button>
+      <button id="btn-help" class="btn ghost icon" title="Show usage instructions" aria-label="Help">?</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Groups</div>
+      <nav id="group-nav"></nav>
+      <div class="sidebar-tip">
+        <strong>Tip.</strong> Drop a <code>.sav</code> or <code>.txt</code> file anywhere on the page to load it.
+        <br /><br />
+        Generated with vanilla JS — no build step, no dependencies.
+      </div>
+    </aside>
+
+    <section class="content">
+      <div id="main"></div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span id="status-file">File: &lt;no file loaded&gt;</span>
+    <span id="status-msg"></span>
+    <span id="status-dirty"></span>
+  </footer>
+
+  <div id="drop-overlay" class="drop-overlay" hidden>
+    <div class="drop-box">Drop the .sav or .txt dump file to load it</div>
+  </div>
+
+  <!-- Usage instructions modal -->
+  <div id="help-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-body" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <header class="modal-head">
+        <h2 id="help-title">How to apply your changes</h2>
+        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      </header>
+      <div class="modal-content">
+        <p>
+          Once you've made your changes and clicked <strong>Save .sav</strong>,
+          the browser downloads a file (default name <code>&lt;name&gt;.edited.sav</code>).
+          To make the game use it, you need to copy that file into the game's
+          save directory — overwriting the original.
+        </p>
+
+        <h3>1 · Find your Windows username</h3>
+        <p class="muted">
+          Press <kbd>Win</kbd>+<kbd>R</kbd>, type <code>whoami</code>, press <kbd>Enter</kbd>.
+          Copy the result (e.g. <code>Alejm</code>) into the box below — it's stored
+          only in this browser.
+        </p>
+        <div class="username-row">
+          <label for="username-input">Windows username:</label>
+          <input type="text" id="username-input" autocomplete="off" spellcheck="false"
+                 placeholder="e.g. Alejm" />
+        </div>
+
+        <h3>2 · The full path</h3>
+        <p class="muted">This is the exact file you need to replace:</p>
+        <div class="path-box">
+          <code id="game-path"></code>
+          <button class="btn small" id="copy-path" title="Copy the resolved path to the clipboard">Copy</button>
+        </div>
+        <p class="muted small">
+          On <strong>macOS</strong> the path is
+          <code>~/Library/Application Support/Godot/app_userdata/Fortune Mill/save_game.sav</code>;
+          on <strong>Linux</strong> it's
+          <code>~/.local/share/godot/app_userdata/Fortune Mill/save_game.sav</code>.
+        </p>
+
+        <h3>3 · Steps</h3>
+        <ol>
+          <li><strong>Close Fortune Mill.</strong> The game overwrites the save when it exits, so it must be closed first.</li>
+          <li><strong>Back up the original.</strong> Rename the current <code>save_game.sav</code> to <code>save_game.sav.bak</code> (just in case).</li>
+          <li><strong>Copy your edited file</strong> into the folder above, named <code>save_game.sav</code>.</li>
+          <li><strong>Reopen the game.</strong> Your changes should be in effect.</li>
+        </ol>
+
+        <div class="callout" id="write-direct-callout" hidden>
+          <strong>💡 Tip — write directly:</strong> your browser supports the
+          <em>File System Access API</em>. You can skip the copy step and
+          write the file straight to the game's folder. Click
+          <button class="btn small" id="btn-write-direct">Write to game folder…</button>
+          and pick <code>save_game.sav</code> in the file dialog.
+        </div>
+
+        <footer class="modal-footer">
+          <label class="checkbox-row">
+            <input type="checkbox" id="dont-show-again" />
+            <span>Don't show this again</span>
+          </label>
+          <button class="btn primary" id="modal-ok">Got it</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/format.js"></script>
+  <script src="js/codec.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

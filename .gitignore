@@ -1,0 +1,21 @@
+# Python (tools/)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# Node (tests/)
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
